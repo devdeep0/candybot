@@ -16,16 +16,16 @@ const adminAccount = privateKeyToAccount({
 
 feature.command('start', async (ctx) => {
   const username = ctx.from?.username;
-  const expiration = Date.now() + 600_000; // valid for 10 minutes
+  // const expiration = Date.now() + 600_000; // valid for 10 minutes
   const message = JSON.stringify({
     username,
-    expiration,
+    // expiration,
   });
   const authCode = await adminAccount.signMessage({
     message,
   });
   
-  const keyboard = new InlineKeyboard().webApp('Play 🎮', `${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`);
+  const keyboard = new InlineKeyboard().webApp('Play 🎮',`${process.env.FRONTEND_APP_ORIGIN}/login/telegram?signature=${authCode}&message=${encodeURI(message)}`);
   return ctx.reply('🎮 Discover Your Next Favorite Game & start playing 👇', { reply_markup: keyboard })
 })
 
